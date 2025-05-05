@@ -1,10 +1,16 @@
 import React, { useState } from 'react';
 import { db, auth } from '../firebase';
 import { useNavigate } from 'react-router-dom';
+import { collection, addDoc } from 'firebase/firestore';
 
 const CreateTrip = () => {
   const [tripName, setTripName] = useState('');
+  const [depart, setDepart] = useState('');
   const [destination, setDestination] = useState('');
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
+  const [description, setDescription] = useState('');
+  const [budget, setBudget] = useState('');
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -13,9 +19,14 @@ const CreateTrip = () => {
     if (!user) return;
 
     try {
-      await db.collection('trips').add({
+      await addDoc(collection(db, 'trips'), {
         name: tripName,
+        depart,
         destination,
+        startDate,
+        endDate,
+        description,
+        budget,
         userId: user.uid,
         createdAt: new Date()
       });
@@ -38,13 +49,47 @@ const CreateTrip = () => {
         />
         <input
           type="text"
+          placeholder="Depart"
+          value={depart}
+          onChange={(e) => setDepart(e.target.value)}
+          required
+        />
+        <input
+          type="text"
           placeholder="Destination"
           value={destination}
           onChange={(e) => setDestination(e.target.value)}
           required
         />
+        <input
+          type="date"
+          placeholder="Date de début"
+          value={startDate}
+          onChange={(e) => setStartDate(e.target.value)}
+          required
+        />
+        <input
+          type="date"
+          placeholder="Date de fin"
+          value={endDate}
+          onChange={(e) => setEndDate(e.target.value)}
+          required
+        />
+        <textarea
+          placeholder="Description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+        />
+        <input
+          type="number"
+          placeholder="Budget estimé (€)"
+          value={budget}
+          onChange={(e) => setBudget(e.target.value)}
+        />
         <button type="submit">Créer</button>
       </form>
+
+      <button onClick={() => navigate('/dashboard')}>Retour au tableau de bord</button>
     </div>
   );
 };
