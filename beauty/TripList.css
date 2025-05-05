@@ -1,0 +1,274 @@
+/* TripList.css - Style professionnel pour la liste de voyages */
+
+/* Variables de couleurs et de tailles */
+:root {
+    --primary-color: #3498db;
+    --primary-dark : #2980b9;
+    --accent-color : #e74c3c;
+    --light-bg     : #f8f9fa;
+    --dark-text    : #2c3e50;
+    --light-text   : #ecf0f1;
+    --border-color : #dcdde1;
+    --shadow       : rgba(0, 0, 0, 0.1);
+    --card-radius  : 8px;
+    --transition   : all 0.3s ease;
+}
+
+/* Style de base */
+.trip-container {
+    max-width  : 1200px;
+    margin     : 0 auto;
+    padding    : 2rem;
+    font-family: 'Roboto', 'Segoe UI', Arial, sans-serif;
+    color      : var(--dark-text);
+}
+
+/* En-tête */
+.trip-header {
+    display        : flex;
+    justify-content: space-between;
+    align-items    : center;
+    margin-bottom  : 2rem;
+    border-bottom  : 1px solid var(--border-color);
+    padding-bottom : 1rem;
+}
+
+.trip-header h1 {
+    font-size  : 2.2rem;
+    color      : var(--primary-dark);
+    margin     : 0;
+    font-weight: 700;
+}
+
+/* Liste de voyages */
+.trip-list {
+    list-style           : none;
+    padding              : 0;
+    display              : grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap                  : 1.5rem;
+}
+
+.trip-item {
+    background-color: white;
+    border-radius   : var(--card-radius);
+    box-shadow      : 0 4px 12px var(--shadow);
+    overflow        : hidden;
+    transition      : var(--transition);
+}
+
+.trip-item:hover {
+    transform : translateY(-5px);
+    box-shadow: 0 8px 16px var(--shadow);
+}
+
+.trip-item-button {
+    width         : 100%;
+    background    : white;
+    border        : none;
+    text-align    : left;
+    padding       : 1.5rem;
+    cursor        : pointer;
+    display       : flex;
+    flex-direction: column;
+    height        : 100%;
+    transition    : var(--transition);
+}
+
+.trip-item-button:hover {
+    background-color: var(--light-bg);
+}
+
+.trip-name {
+    font-size  : 1.4rem;
+    color      : var(--primary-dark);
+    margin     : 0 0 0.5rem 0;
+    font-weight: 600;
+}
+
+.trip-destination {
+    color    : var(--dark-text);
+    font-size: 1rem;
+    margin   : 0;
+    opacity  : 0.8;
+}
+
+.trip-dates {
+    margin-top: auto;
+    font-size : 0.9rem;
+    color     : #666;
+}
+
+/* Message vide */
+.empty-trips {
+    text-align      : center;
+    padding         : 3rem;
+    background-color: var(--light-bg);
+    border-radius   : var(--card-radius);
+    font-size       : 1.1rem;
+    color           : #666;
+}
+
+/* Détails du voyage */
+.trip-details {
+    background-color: white;
+    border-radius   : var(--card-radius);
+    box-shadow      : 0 4px 12px var(--shadow);
+    padding         : 2rem;
+}
+
+.trip-details h1 {
+    color         : var(--primary-dark);
+    margin-top    : 0;
+    border-bottom : 2px solid var(--primary-color);
+    padding-bottom: 0.75rem;
+    margin-bottom : 1.5rem;
+}
+
+.trip-details p {
+    margin     : 0.75rem 0;
+    line-height: 1.6;
+}
+
+.trip-details strong {
+    color: var(--primary-dark);
+}
+
+/* Boutons */
+.button {
+    background-color: var(--primary-color);
+    color           : white;
+    border          : none;
+    padding         : 0.75rem 1.5rem;
+    font-size       : 1rem;
+    border-radius   : 4px;
+    cursor          : pointer;
+    transition      : var(--transition);
+    font-weight     : 500;
+    display         : inline-flex;
+    align-items     : center;
+    justify-content : center;
+    text-decoration : none;
+    margin-right    : 1rem;
+    margin-top      : 1.5rem;
+}
+
+.button:hover {
+    background-color: var(--primary-dark);
+    transform       : translateY(-2px);
+}
+
+.button-secondary {
+    background-color: white;
+    color           : var(--primary-color);
+    border          : 1px solid var(--primary-color);
+}
+
+.button-secondary:hover {
+    background-color: var(--light-bg);
+    color           : var(--primary-dark);
+    border-color    : var(--primary-dark);
+}
+
+.buttons-container {
+    display   : flex;
+    margin-top: 2rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .trip-container {
+        padding: 1rem;
+    }
+
+    .trip-header {
+        flex-direction: column;
+        align-items   : flex-start;
+    }
+
+    .trip-list {
+        grid-template-columns: 1fr;
+    }
+
+    .buttons-container {
+        flex-direction: column;
+        width         : 100%;
+    }
+
+    .button {
+        width       : 100%;
+        margin-top  : 0.75rem;
+        margin-right: 0;
+    }
+}
+
+/* Ajoutez ces styles à votre fichier TripList.css */
+
+.trip-info-grid {
+    display              : grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap                  : 15px;
+    margin-bottom        : 30px;
+}
+
+.trip-info-item {
+    padding         : 10px;
+    background-color: #f9f9f9;
+    border-radius   : 5px;
+}
+
+.ai-plan-section {
+    margin          : 20px 0;
+    padding         : 15px;
+    background-color: #f5f7fa;
+    border-radius   : 8px;
+    border-left     : 4px solid #4a90e2;
+}
+
+.ai-plan-container {
+    font-size: 0.95rem;
+}
+
+.ai-plan-overview {
+    background-color: white;
+    padding         : 15px;
+    border-radius   : 6px;
+    margin-bottom   : 20px;
+    box-shadow      : 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.ai-plan-days {
+    display       : flex;
+    flex-direction: column;
+    gap           : 15px;
+}
+
+.ai-plan-day {
+    background-color: white;
+    padding         : 15px;
+    border-radius   : 6px;
+    box-shadow      : 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.ai-plan-day h4 {
+    color         : #4a90e2;
+    border-bottom : 1px solid #e1e4e8;
+    padding-bottom: 8px;
+    margin-top    : 0;
+}
+
+.ai-plan-day-content {
+    white-space: pre-line;
+}
+
+.ai-plan-budget-breakdown {
+    margin-top      : 20px;
+    background-color: white;
+    padding         : 15px;
+    border-radius   : 6px;
+    box-shadow      : 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.ai-plan-simple p {
+    margin: 8px 0;
+}

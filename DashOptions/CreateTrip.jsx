@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { db, auth } from '../firebase';
 import { useNavigate } from 'react-router-dom';
 import { collection, addDoc } from 'firebase/firestore';
+import '../beauty/CreateTrip.css';
 
 const CreateTrip = () => {
   const [tripName, setTripName] = useState('');
@@ -68,32 +69,134 @@ const CreateTrip = () => {
   };
 
   return (
-    <div>
-      <h2>Créer un nouveau voyage</h2>
-      <form>
-        <input type="text" placeholder="Nom du voyage" value={tripName} onChange={(e) => setTripName(e.target.value)} required />
-        <input type="text" placeholder="Depart" value={depart} onChange={(e) => setDepart(e.target.value)} required />
-        <input type="text" placeholder="Destination" value={destination} onChange={(e) => setDestination(e.target.value)} required />
-        <input type="date" placeholder="Date de début" value={startDate} onChange={(e) => setStartDate(e.target.value)} required />
-        <input type="date" placeholder="Date de fin" value={endDate} onChange={(e) => setEndDate(e.target.value)} required />
-        <textarea placeholder="Description" value={description} onChange={(e) => setDescription(e.target.value)} />
-        <input type="number" placeholder="Nombre de personnes" value={peopleCount} onChange={(e) => setPeopleCount(e.target.value)} required />
-        <input type="number" placeholder="Budget estimé (€)" value={budget} onChange={(e) => setBudget(e.target.value)} />
+    <div className="create-trip-container">
+      <header className="create-trip-header">
+        <h2 className="create-trip-title">Créer un nouveau voyage</h2>
+      </header>
+      
+      <form className="trip-form">
+        <div className="form-group">
+          <label className="form-label">Nom du voyage</label>
+          <input 
+            type="text" 
+            className="form-input" 
+            placeholder="Ex: Vacances d'été à Bali" 
+            value={tripName} 
+            onChange={(e) => setTripName(e.target.value)} 
+            required 
+          />
+        </div>
+        
+        <div className="form-group">
+          <label className="form-label">Lieu de départ</label>
+          <input 
+            type="text" 
+            className="form-input" 
+            placeholder="Ex: Paris" 
+            value={depart} 
+            onChange={(e) => setDepart(e.target.value)} 
+            required 
+          />
+        </div>
+        
+        <div className="form-group">
+          <label className="form-label">Destination</label>
+          <input 
+            type="text" 
+            className="form-input" 
+            placeholder="Ex: Bali, Indonésie" 
+            value={destination} 
+            onChange={(e) => setDestination(e.target.value)} 
+            required 
+          />
+        </div>
+        
+        <div className="form-group">
+          <label className="form-label">Nombre de personnes</label>
+          <input 
+            type="number" 
+            className="form-input" 
+            placeholder="Ex: 2" 
+            value={peopleCount} 
+            onChange={(e) => setPeopleCount(e.target.value)} 
+            required 
+          />
+        </div>
+        
+        <div className="form-group">
+          <label className="form-label">Date de début</label>
+          <input 
+            type="date" 
+            className="form-input" 
+            value={startDate} 
+            onChange={(e) => setStartDate(e.target.value)} 
+            required 
+          />
+        </div>
+        
+        <div className="form-group">
+          <label className="form-label">Date de fin</label>
+          <input 
+            type="date" 
+            className="form-input" 
+            value={endDate} 
+            onChange={(e) => setEndDate(e.target.value)} 
+            required 
+          />
+        </div>
+        
+        <div className="form-group">
+          <label className="form-label">Budget estimé (€)</label>
+          <input 
+            type="number" 
+            className="form-input" 
+            placeholder="Ex: 2000" 
+            value={budget} 
+            onChange={(e) => setBudget(e.target.value)} 
+          />
+        </div>
+        
+        <div className="form-group full-width">
+          <label className="form-label">Description du voyage</label>
+          <textarea 
+            className="form-textarea" 
+            placeholder="Décrivez vos préférences, activités souhaitées, etc." 
+            value={description} 
+            onChange={(e) => setDescription(e.target.value)} 
+          />
+        </div>
 
-        <button type="button" onClick={generateAIPlan}>
-          {loadingAI ? 'Génération en cours...' : 'Générer un plan AI'}
-        </button>
+        <div className="buttons-group">
+          <button 
+            type="button" 
+            className={`btn btn-primary ${loadingAI ? 'btn-loading' : ''}`} 
+            onClick={generateAIPlan}
+            disabled={loadingAI}
+          >
+            {loadingAI ? 'Génération en cours...' : 'Générer un plan AI'}
+          </button>
+        </div>
 
         {aiPlan && (
-          <div>
-            <h3>Plan de voyage généré :</h3>
-            <pre>{aiPlan}</pre>
-            <button type="button" onClick={handleSaveTrip}>Sauver</button>
+          <div className="ai-plan-container slide-in">
+            <h3 className="ai-plan-title">Plan de voyage généré</h3>
+            <div className="ai-plan-content">{aiPlan}</div>
+            
+            <div className="buttons-group">
+              <button type="button" className="btn btn-success" onClick={handleSaveTrip}>
+                Sauvegarder ce voyage
+              </button>
+            </div>
           </div>
         )}
       </form>
 
-      <button onClick={() => navigate('/dashboard')}>Retour au tableau de bord</button>
+      <button 
+        className="btn btn-back" 
+        onClick={() => navigate('/dashboard')}
+      >
+        &larr; Retour au tableau de bord
+      </button>
     </div>
   );
 };

@@ -2,7 +2,8 @@
 import React, { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
-import { useNavigate, Link } from "react-router-dom"; // Ajouter Link
+import { useNavigate, Link } from "react-router-dom"; 
+import "../beauty/SignUp.css"; 
 
 function SignUp() {
   const [email, setEmail] = useState("");
@@ -22,7 +23,7 @@ function SignUp() {
   };
 
   return (
-    <form onSubmit={handleSignUp}>
+    <form onSubmit={handleSignUp} className="signup-container">
       <h2>Sign Up</h2>
       <input
         type="email"

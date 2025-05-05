@@ -2,7 +2,9 @@
 import React, { useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
-import { useNavigate, Link } from "react-router-dom"; // Ajouter Link
+import { useNavigate, Link } from "react-router-dom"; 
+import "../beauty/SignIn.css"; 
+
 
 function SignIn() {
   const [email, setEmail] = useState("");
@@ -21,7 +23,7 @@ function SignIn() {
   };
 
   return (
-    <form onSubmit={handleSignIn}>
+    <form onSubmit={handleSignIn} className="signin-container">
       <h2>Sign In</h2>
       <input
         type="email"
