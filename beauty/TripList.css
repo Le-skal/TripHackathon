@@ -12,6 +12,8 @@
     --shadow       : rgba(0, 0, 0, 0.1);
     --card-radius  : 8px;
     --transition   : all 0.3s ease;
+    --danger-color : #e74c3c;
+    --warning-color: #f39c12;
 }
 
 /* Style de base */
@@ -40,6 +42,16 @@
     font-weight: 700;
 }
 
+.delete-actions {
+    display: flex;
+    gap    : 10px;
+    margin-bottom: 15px;
+}
+
+.bottom-actions {
+    margin-top: 2rem;
+}
+
 /* Liste de voyages */
 .trip-list {
     list-style           : none;
@@ -55,6 +67,7 @@
     box-shadow      : 0 4px 12px var(--shadow);
     overflow        : hidden;
     transition      : var(--transition);
+    position        : relative;
 }
 
 .trip-item:hover {
@@ -170,9 +183,137 @@
     border-color    : var(--primary-dark);
 }
 
+/* Boutons pour la suppression */
+.button-delete {
+    background-color: white;
+    color           : var(--danger-color);
+    border          : 1px solid var(--danger-color);
+    margin-top      : 0;
+}
+
+.button-delete:hover {
+    background-color: #fdf2f2;
+    color           : var(--danger-color);
+    border-color    : var(--danger-color);
+}
+
+.button-warning {
+    background-color: var(--warning-color);
+    color           : white;
+    margin-top      : 0;
+}
+
+.button-warning:hover {
+    background-color: #e67e22;
+}
+
+.button-warning.active {
+    background-color: #95a5a6;
+    color           : white;
+}
+
+.button-danger {
+    background-color: var(--danger-color);
+    color           : white;
+    margin-top      : 0;
+}
+
+.button-danger:hover {
+    background-color: #c0392b;
+}
+
+.button-danger:disabled {
+    background-color: #bdc3c7;
+    cursor          : not-allowed;
+    transform       : none;
+}
+
 .buttons-container {
     display   : flex;
     margin-top: 2rem;
+}
+
+/* Mode suppression */
+.trip-delete-selection {
+    display    : flex;
+    padding    : 1.5rem;
+    width      : 100%;
+    align-items: center;
+}
+
+.trip-info {
+    flex            : 1;
+    display         : flex;
+    flex-direction  : column;
+    justify-content : center;
+    height          : 100%;
+    padding-left    : 1rem;
+}
+
+.selected-for-delete {
+    border     : 2px solid var(--danger-color);
+    box-shadow : 0 0 0 2px rgba(231, 76, 60, 0.3);
+    transform  : translateY(-3px);
+    background : rgba(231, 76, 60, 0.05);
+}
+
+/* Style pour les cases à cocher */
+.trip-checkbox-container {
+    display     : block;
+    position    : relative;
+    padding-left: 35px;
+    cursor      : pointer;
+    user-select : none;
+    min-width   : 24px;
+    min-height  : 24px;
+}
+
+.trip-checkbox-container input {
+    position: absolute;
+    opacity : 0;
+    cursor  : pointer;
+    height  : 0;
+    width   : 0;
+}
+
+.trip-checkbox-checkmark {
+    position           : absolute;
+    top                : 0;
+    left               : 0;
+    height             : 24px;
+    width              : 24px;
+    background-color   : #eee;
+    border-radius      : 4px;
+    border             : 1px solid #ddd;
+    transition         : var(--transition);
+}
+
+.trip-checkbox-container:hover input ~ .trip-checkbox-checkmark {
+    background-color: #ccc;
+}
+
+.trip-checkbox-container input:checked ~ .trip-checkbox-checkmark {
+    background-color: var(--danger-color);
+}
+
+.trip-checkbox-checkmark:after {
+    content : "";
+    position: absolute;
+    display : none;
+}
+
+.trip-checkbox-container input:checked ~ .trip-checkbox-checkmark:after {
+    display: block;
+}
+
+.trip-checkbox-container .trip-checkbox-checkmark:after {
+    left      : 9px;
+    top       : 5px;
+    width     : 5px;
+    height    : 10px;
+    border    : solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
 }
 
 /* Responsive */
@@ -184,6 +325,18 @@
     .trip-header {
         flex-direction: column;
         align-items   : flex-start;
+    }
+    
+    .delete-actions {
+        margin-top: 1rem;
+        width     : 100%;
+        flex-direction: column;
+    }
+    
+    .delete-actions button {
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 10px;
     }
 
     .trip-list {

@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { db, auth } from "../firebase";
 import { useNavigate } from "react-router-dom";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { collection, getDocs, query, where, doc, deleteDoc } from "firebase/firestore";
 import '../beauty/TripList.css';
 
 const TripList = () => {
   const [trips, setTrips] = useState([]);
   const [selectedTrip, setSelectedTrip] = useState(null);
+  const [selectedTripsToDelete, setSelectedTripsToDelete] = useState([]);
+  const [isDeleteMode, setIsDeleteMode] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
   const navigate = useNavigate();
   const user = auth.currentUser;
 
@@ -89,6 +92,42 @@ const TripList = () => {
     );
   };
 
+  const toggleTripSelection = (tripId) => {
+    if (selectedTripsToDelete.includes(tripId)) {
+      setSelectedTripsToDelete(selectedTripsToDelete.filter(id => id !== tripId));
+    } else {
+      setSelectedTripsToDelete([...selectedTripsToDelete, tripId]);
+    }
+  };
+
+  const toggleDeleteMode = () => {
+    setIsDeleteMode(!isDeleteMode);
+    setSelectedTripsToDelete([]);
+  };
+
+  const deleteSelectedTrips = async () => {
+    if (selectedTripsToDelete.length === 0) return;
+    
+    setIsDeleting(true);
+    
+    try {
+      // Supprimer chaque voyage sélectionné
+      for (const tripId of selectedTripsToDelete) {
+        await deleteDoc(doc(db, "trips", tripId));
+      }
+      
+      // Mettre à jour la liste des voyages
+      setTrips(trips.filter(trip => !selectedTripsToDelete.includes(trip.id)));
+      setSelectedTripsToDelete([]);
+      setIsDeleteMode(false);
+    } catch (error) {
+      console.error("Erreur lors de la suppression des voyages:", error);
+      alert("Une erreur s'est produite lors de la suppression des voyages.");
+    } finally {
+      setIsDeleting(false);
+    }
+  };
+
   if (!user) {
     return <div className="trip-container">
       <p className="empty-trips">Vous devez être connecté pour voir vos voyages.</p>
@@ -152,24 +191,69 @@ const TripList = () => {
       ) : (
         <ul className="trip-list">
           {trips.map((trip) => (
-            <li key={trip.id} className="trip-item">
-              <button
-                onClick={() => setSelectedTrip(trip)}
-                className="trip-item-button"
-              >
-                <h3 className="trip-name">{trip.name}</h3>
-                <p className="trip-destination">{trip.destination}</p>
-                {trip.startDate && trip.endDate && (
-                  <span className="trip-dates">
-                    {trip.startDate} - {trip.endDate}
-                  </span>
-                )}
-              </button>
+            <li key={trip.id} className={`trip-item ${isDeleteMode && selectedTripsToDelete.includes(trip.id) ? 'selected-for-delete' : ''}`}>
+              {isDeleteMode ? (
+                <div className="trip-delete-selection">
+                  <label className="trip-checkbox-container">
+                    <input
+                      type="checkbox"
+                      checked={selectedTripsToDelete.includes(trip.id)}
+                      onChange={() => toggleTripSelection(trip.id)}
+                    />
+                    <span className="trip-checkbox-checkmark"></span>
+                  </label>
+                  <div className="trip-info">
+                    <h3 className="trip-name">{trip.name}</h3>
+                    <p className="trip-destination">{trip.destination}</p>
+                    {trip.startDate && trip.endDate && (
+                      <span className="trip-dates">
+                        {trip.startDate} - {trip.endDate}
+                      </span>
+                    )}
+                  </div>
+                </div>
+              ) : (
+                <button
+                  onClick={() => setSelectedTrip(trip)}
+                  className="trip-item-button"
+                >
+                  <h3 className="trip-name">{trip.name}</h3>
+                  <p className="trip-destination">{trip.destination}</p>
+                  {trip.startDate && trip.endDate && (
+                    <span className="trip-dates">
+                      {trip.startDate} - {trip.endDate}
+                    </span>
+                  )}
+                </button>
+              )}
             </li>
           ))}
         </ul>
       )}
-      <button className="button" onClick={() => navigate("/dashboard")}>Retour au tableau de bord</button>
+      
+      <div className="bottom-actions">
+        {trips.length > 0 && (
+          <div className="delete-actions">
+            <button 
+              className={`button ${isDeleteMode ? 'button-warning active' : 'button-delete'}`}
+              onClick={toggleDeleteMode}
+            >
+              {isDeleteMode ? 'Annuler' : 'Supprimer des voyages'}
+            </button>
+            
+            {isDeleteMode && selectedTripsToDelete.length > 0 && (
+              <button 
+                className="button button-danger"
+                onClick={deleteSelectedTrips}
+                disabled={isDeleting}
+              >
+                {isDeleting ? 'Suppression en cours...' : `Supprimer (${selectedTripsToDelete.length})`}
+              </button>
+            )}
+          </div>
+        )}
+        <button className="button" onClick={() => navigate("/dashboard")}>Retour au tableau de bord</button>
+      </div>
     </div>
   );
 };

@@ -31,6 +31,7 @@ body {
     max-width: 1200px;
     margin   : 0 auto;
     padding  : 2rem;
+    min-width: 625px;
 }
 
 .dashboard-header {
@@ -43,11 +44,11 @@ body {
 }
 
 .dashboard-title {
-    font-size  : 2rem;
-    font-weight: 500;
-    color      : var(--dark-color);
-    margin     : 0;
-    animation  : fadeIn 0.5s ease-in-out;
+    font-size   : 2rem;
+    font-weight : 500;
+    color       : var(--dark-color);
+    margin      : 0;
+    animation   : fadeIn 0.5s ease-in-out;
 }
 
 .user-email {
