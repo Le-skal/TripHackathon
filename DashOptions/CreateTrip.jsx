@@ -11,6 +11,7 @@ const CreateTrip = () => {
   const [endDate, setEndDate] = useState('');
   const [description, setDescription] = useState('');
   const [budget, setBudget] = useState('');
+  const [peopleCount, setPeopleCount] = useState(''); 
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -26,6 +27,7 @@ const CreateTrip = () => {
         startDate,
         endDate,
         description,
+        peopleCount,
         budget,
         userId: user.uid,
         createdAt: new Date()
@@ -79,6 +81,13 @@ const CreateTrip = () => {
           placeholder="Description"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
+        />
+        <input
+          type="number"
+          placeholder="Nombre de personnes"
+          value={peopleCount}
+          onChange={(e) => setPeopleCount(e.target.value)}
+          required
         />
         <input
           type="number"
