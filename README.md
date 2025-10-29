@@ -45,21 +45,21 @@ Un utilisateur veut planifier un voyage à Bali en 5 jours pour 2 personnes avec
 ┌─────────────────────────────────────────────────────────┐
 │                  FRONTEND (React)                       │
 │                  Port 3000                              │
-│  ┌──────────────────────────────────────────────────┐  │
-│  │  SignIn / SignUp (Firebase Auth)                │  │
-│  │  Dashboard (Vue des voyages)                    │  │
-│  │  CreateTrip (Formulaire + Génération IA)        │  │
-│  │  TripList (Liste des voyages)                   │  │
-│  │  Profile (Gestion du profil)                    │  │
-│  └──────────────────────────────────────────────────┘  │
+│  ┌──────────────────────────────────────────────────┐   │
+│  │  SignIn / SignUp (Firebase Auth)                 │   │
+│  │  Dashboard (Vue des voyages)                     │   │
+│  │  CreateTrip (Formulaire + Génération IA)         │   │
+│  │  TripList (Liste des voyages)                    │   │
+│  │  Profile (Gestion du profil)                     │   │
+│  └──────────────────────────────────────────────────┘   │
 └─────────────────────────────────────────────────────────┘
                          ▼
 ┌─────────────────────────────────────────────────────────┐
 │           FIREBASE (Google Cloud)                       │
-│  ┌──────────────────────────────────────────────────┐  │
-│  │  Authentication (Firebase Auth)                 │  │
-│  │  Firestore (Base de données NoSQL)              │  │
-│  └──────────────────────────────────────────────────┘  │
+│  ┌──────────────────────────────────────────────────┐   │
+│  │  Authentication (Firebase Auth)                  │   │
+│  │  Firestore (Base de données NoSQL)               │   │
+│  └──────────────────────────────────────────────────┘   │
 └─────────────────────────────────────────────────────────┘
                          ▼
 ┌─────────────────────────────────────────────────────────┐
